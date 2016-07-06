@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: "iuhoay's blog"
 subtitle:
 description:
 author: iuhoay
@@ -71,7 +71,7 @@ theme: apollo
 deploy:
   type: git
   repo:
-    github: 
+    github: git@github.com:iuhoay/iuhoay.github.io.git
 
 archive_generator:
   per_page: 0
