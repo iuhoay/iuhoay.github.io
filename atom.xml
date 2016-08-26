@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://iuhoay.com/"/>
-  <updated>2016-08-25T01:59:03.000Z</updated>
+  <updated>2016-08-26T07:02:08.000Z</updated>
   <id>http://iuhoay.com/</id>
   
   <author>
@@ -14,6 +14,49 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Install PostgreSQL on Ubuntu</title>
+    <link href="http://iuhoay.com/2016/08/26/Install-PostgreSQL-on-Ubuntu/"/>
+    <id>http://iuhoay.com/2016/08/26/Install-PostgreSQL-on-Ubuntu/</id>
+    <published>2016-08-26T06:32:48.000Z</published>
+    <updated>2016-08-26T07:02:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>安装 PostgreSQL 9.5</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ sudo sh -c <span class="string">'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" &gt; /etc/apt/sources.list.d/pgdg.list'</span></div><div class="line">$ sudo apt-get install wget ca-certificates</div><div class="line">$ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -</div><div class="line">$ sudo apt-get update</div><div class="line">$ sudo apt-get upgrade</div><div class="line">$ sudo apt-get install postgresql-9.5</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>安装完成，使用 <code>postgres</code> 用户登录控制台</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ sudo su - postgres</div><div class="line">postgres@:~$ psql</div><div class="line">psql (9.5.4)</div><div class="line">Type <span class="string">"help"</span> <span class="keyword">for</span> help.</div><div class="line"></div><div class="line">postgres=<span class="comment">#</span></div></pre></td></tr></table></figure>
+<p>使用 <code>\password</code> 命令设置密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">postgres=# \password postgres</div></pre></td></tr></table></figure>
+<p>使用 <code>\q</code> 命令退出控制台</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">postgres=# \q</div></pre></td></tr></table></figure>
+<p>使用 shell 创建数据库用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ sudo -u postgres createuser --superuser dbuser</div><div class="line">$ sudo -u postgres psql</div><div class="line">postgres=<span class="comment"># \password dbuser</span></div><div class="line">postgres=<span class="comment"># \q</span></div></pre></td></tr></table></figure>
+<p>为 <code>dbuser</code> 创建数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo -u postgres createdb -O dbuser exampledb</div></pre></td></tr></table></figure>
+<p>使用 <code>dbuser</code> 登录数据库并打开 <code>exampledb</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ psql -U dbuser -d exampledb -h 127.0.0.1 -p 5432</div></pre></td></tr></table></figure>
+<p><code>-U</code> 指定用户 <code>-d</code> 指定表 <code>-h</code> 指定服务器 <code>-p</code> 指定端口</p>
+<p>打开远程访问</p>
+<p>打开 <code>/etc/postgresql/9.5/main/postgresql.conf</code>，找到 <code>listen_addresses</code> 替换为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">listen_addresses = &apos;*&apos;</div></pre></td></tr></table></figure>
+<p>修改 <code>/etc/postgresql/9.5/main/pg_hba.conf</code>，找到 <code>host   all   all   127.0.0.1/32    md5</code> 替换为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># TYPE  DATABASE  USER    ADDRESS     METHOD</div><div class="line">host    all       all     0.0.0.0/0   md5</div></pre></td></tr></table></figure>
+<p>执行 <code>sudo service postgresql restart</code> 重启服务</p>
+<p>最后使用外部 ip 访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ psql -U dbuser -d exampledb -h 192.168.1.233</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;安装 PostgreSQL 9.5&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ sudo sh -c &lt;span class=&quot;string&quot;&gt;&#39;echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main&quot; &amp;gt; /etc/apt/sources.list.d/pgdg.list&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ sudo apt-get install wget ca-certificates&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ sudo apt-get update&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ sudo apt-get upgrade&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ sudo apt-get install postgresql-9.5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>macos 制作 Ubuntu usb 启动盘</title>
