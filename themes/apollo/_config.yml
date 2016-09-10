@@ -1,8 +1,8 @@
 menu:
-    Blog: /
-    Archive: /archives/
-    GitHub: https://github.com/iuhoay
-    Rss: /atom.xml
+  Blog: /
+  Archive: /archives/
+  GitHub: https://github.com/iuhoay
+  Rss: /atom.xml
 
 favicon: /favicon.png
 logo: /favicon.png
@@ -10,7 +10,7 @@ logo: /favicon.png
 # Comment
 # e.g disqus: seansun
 disqus:
-duoshuo: 
+duoshuo:
 
 # Analytics
 # google-analytics:
@@ -18,8 +18,3 @@ ga: UA-44428878-1
 
 # Copyright Infomation
 startyear: 2012
-
-# Font CDN
-#true : use google fonts api, not stable for chinese visitor sometimes, caused by force majeure factor
-#false: use useso fonts api instead of google's, great response speed for chinese visitor
-googlefonts: false
